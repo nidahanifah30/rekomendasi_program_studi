@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Data Program Studi</title>
+
+    <!-- Fonts Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,500;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="header">
+                <div class="logo py-3">
+                    <img src="/static/images/logo.png" alt="">
+                </div>
+                <h4 class="namaspk">SPK <br> Rekomendasi Program Studi</h4>
+
+                <div class="main">
+                    <div class="list-item">
+                        <a href="/dashboard">
+                            <i class="bi bi-speedometer2"></i>
+                            <span class="description ml-2">Dashboard</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="/siswa">
+                            <i class="bi bi-people"></i>
+                            <span class="description">Data Siswa</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="/prodi">
+                            <i class="bi bi-book"></i>
+                            <span class="description">Data Prodi</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="/perhitungan/gap/:nisn">
+                            <i class="bi bi-calculator"></i>
+                            <span class="description">Perhitungan</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="/data-rekomendasi">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <span class="description">Data Rekomendasi</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <div id="menu-button">
+                    <input type="checkbox" id="menu-checkbox">
+                    <label for="menu-checkbox" id="menu-label">
+                        <div id="hamburger"></div>
+                    </label>
+                </div>
+                
+            </div>
+            <!-- Tambahkan div wrapper untuk konten -->
+            <div class="conten-wrapper">
+                
+                <!-- Content -->
+                <div class="dashboard-content p-4">
+                    <h1 class="fw-300">
+                        <i class="bi bi-book"></i>
+                        Data Prodi
+                    </h1>
+                    
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <!-- Action Buttons and Search -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahProdi">
+                                            <i class="bi bi-plus-circle"></i> Tambah Prodi
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <form method="GET" action="/prodi" class="d-flex" role="search">
+                                        <input type="text" name="q" class="form-control" placeholder="Cari kode atau nama prodi..." value="{{.Query}}">
+                                        <button type="submit" class="btn btn-dark"><i class="bi bi-search"></i>Cari</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Flash Message -->
+                            {{if .Flash}}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{.Flash}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            {{end}}
+
+                            <!-- Tabel -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="table-dark text-center">
+                                        <tr>
+                                            <th>Kode Prodi</th>
+                                            <th>Nama Prodi</th>
+                                            <th>N1</th><th>N2</th><th>N3</th><th>N4</th><th>N5</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{range $i, $p := .Data}}
+                                        <tr>
+                                            <td class="text-center">{{$p.KodeProdi}}</td>
+                                            <td>{{$p.NamaProdi}}</td>
+                                            <td class="text-center">{{$p.N1}}</td>
+                                            <td class="text-center">{{$p.N2}}</td>
+                                            <td class="text-center">{{$p.N3}}</td>
+                                            <td class="text-center">{{$p.N4}}</td>
+                                            <td class="text-center">{{$p.N5}}</td>
+                                            <td class="text-center">
+                                                <!-- tombol edit -->
+                                                <button class="btn btn-sm btn-primary text-white" data-bs-toggle="modal" data-bs-target="#modalEditProdi{{$p.KodeProdi}}"><i class="bi bi-pencil"></i> Edit</button>
+                                                <!-- tombol hapus -->
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapusProdi{{$p.KodeProdi}}"><i class="bi bi-trash"></i> Hapus</button>
+                                            </td>
+                                        </tr>
+                                        {{end}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit & Hapus Semua Prodi -->
+    {{range .Data}}
+    <!-- Modal Edit Prodi -->
+    <div class="modal fade" id="modalEditProdi{{.KodeProdi}}" tabindex="-1">
+        <div class="modal-dialog">
+            <form action="/prodi/edit/{{.KodeProdi}}" method="POST" class="modal-content">
+                <div class="modal-header"><h5>Edit Program Studi</h5></div>
+                <div class="modal-body">
+                    <div class="mb-2"><label>Kode Prodi</label><input type="text" class="form-control" value="{{.KodeProdi}}" readonly></div>
+                    <div class="mb-2"><label>Nama Prodi</label><input type="text" name="nama_prodi" class="form-control" value="{{.NamaProdi}}" required></div>
+                    <div class="mb-2"><label>N1</label><input type="number" step="0.01" name="N1" class="form-control" value="{{.N1}}" required></div>
+                    <div class="mb-2"><label>N2</label><input type="number" step="0.01" name="N2" class="form-control" value="{{.N2}}" required></div>
+                    <div class="mb-2"><label>N3</label><input type="number" step="0.01" name="N3" class="form-control" value="{{.N3}}" required></div>
+                    <div class="mb-2"><label>N4</label><input type="number" step="0.01" name="N4" class="form-control" value="{{.N4}}" required></div>
+                    <div class="mb-2"><label>N5</label><input type="number" step="0.01" name="N5" class="form-control" value="{{.N5}}" required></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Hapus Prodi -->
+    <div class="modal fade" id="modalHapusProdi{{.KodeProdi}}" tabindex="-1">
+        <div class="modal-dialog">
+            <form action="/prodi/hapus/{{.KodeProdi}}" method="POST" class="modal-content">
+                <div class="modal-header bg-danger text-white"><h5>Hapus Program Studi</h5></div>
+                <div class="modal-body">
+                    <p>Hapus data <strong>{{.NamaProdi}}</strong> ({{.KodeProdi}})?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{end}}
+
+    <!-- Modal Tambah -->
+    <div class="modal fade" id="modalTambahProdi" tabindex="-1">
+        <div class="modal-dialog">
+            <form action="/prodi/tambah" method="POST" class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">Tambah Program Studi</h5></div>
+                <div class="modal-body">
+                    <div class="mb-2"><label>Kode Prodi</label><input type="text" name="kode" class="form-control" required></div>
+                    <div class="mb-2"><label>Nama Prodi</label><input type="text" name="nama_prodi" class="form-control" required></div>
+                    <div class="mb-2"><label>N1</label><input type="number" step="0.01" name="N1" class="form-control" required></div>
+                    <div class="mb-2"><label>N2</label><input type="number" step="0.01" name="N2" class="form-control" required></div>
+                    <div class="mb-2"><label>N3</label><input type="number" step="0.01" name="N3" class="form-control" required></div>
+                    <div class="mb-2"><label>N4</label><input type="number" step="0.01" name="N4" class="form-control" required></div>
+                    <div class="mb-2"><label>N5</label><input type="number" step="0.01" name="N5" class="form-control" required></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Chart Script -->
+    <script src="/static/js/sidebar.js"></script>
+</body>
+</html>
