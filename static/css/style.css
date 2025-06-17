@@ -1,1 +1,293 @@
+* {
+    font-family: "Ubuntu", sans-serif;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: stretch;
+}
+
+.sidebar {
+    background-color: #111827;
+    width: 260px;
+    padding: 24px;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    transition: all ease-in .3s;
+}
+
+.sidebar.hide {
+    width: 87px;
+    transition: all ease-out .3s;
+}
+
+.sidebar .description-header {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.sidebar.hide .description-header {
+    display: none;
+}
+
+.sidebar a {
+    text-decoration: none;
+}
+
+.sidebar .header .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 8px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.logo img {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100px;
+    margin-left: 50px;
+}
+
+.sidebar.hide .logo img {
+    display: none;
+}
+
+.namaspk {
+    color: white;
+    text-align: center;
+}
+
+.sidebar.hide .namaspk {
+    display: none;
+}
+
+.sidebar .main .list-item .description {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.sidebar.hide .main .list-item .description {
+    display: none;
+}
+
+.sidebar .main .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all ease-in .2s;
+}
+
+.sidebar .main .list-item:hover {
+    background: #f90;
+    transition: all ease-in .2s;
+}
+
+/* Toogle Menu */
+#menu-button {
+    width: 32px;
+    position: absolute;
+    overflow: hidden;
+}
+
+#menu-label {
+    position: relative;
+    display: block;
+    height: 20px;
+    cursor: pointer;
+}
+
+#menu-checkbox {
+    display: none;
+}
+
+#hamburger, #menu-label:after, #menu-label:before {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #111827;
+}
+
+#menu-label:after, #menu-label:before {
+    content: "";
+    transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) left;
+}
+
+#menu-label:before {
+    top: 0;
+}
+
+#menu-label:after {
+    top: 8px;
+}
+
+#hamburger {
+    top: 16px;
+}
+
+#hamburger:before {
+    content: "MENU";
+    position: absolute;
+    top: 5px;
+    right: 0;
+    left: 0;
+    color: #111827;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#menu-checkbox:checked + #menu-label::before {
+    left: -39px;
+}
+
+#menu-checkbox:checked + #menu-label::after {
+    left: 39px;
+}
+
+#menu-checkbox:checked + #menu-label #hamburger::before {
+    animation: moveUpThenDown 0.8s ease 0.2s forwards, shakeUp 0.8s ease 0.2s forwards, ;
+    -webkit-animation: moveUpThenDown 0.8s ease 0.2s forwards,
+    shakeUp 0.8s ease 0.2s forwards,
+    shakedown 0.8s ease 0.2s forwards;
+}
+
+.main-content {
+    background-color: #BDC3C7;
+    flex-grow: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header {
+    display: flex;
+    margin: 0;
+    padding: 30px;
+    align-items: center;
+    background-color: #34495E;
+}
+
+/* Card Box */
+.card-box {
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.card-box.bg-warning { background-color: #f39c12; }
+.card-box.bg-primary { background-color: #007bff; }
+.card-box.bg-success { background-color: #28a745; }
+.card-box.bg-danger  { background-color: #dc3545; }
+
+/* Table */
+.table thead {
+    background-color: #2c3e50;
+    color: white;
+}
+.table-bordered th,
+.table-bordered td {
+    vertical-align: middle;
+}
+
+.table td, .table th {
+    white-space: nowrap; /* Biar tidak wrap ke bawah */
+    font-size: 0.9rem;
+}
+
+/* Canvas (Chart) */
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+#pieChart,
+#chartRekomendasi {
+    max-height: 300px;
+    background-color: transparent; /* biarkan transparan */
+}
+
+
+@keyframes moveUpThenDown {
+    0% {
+        top: 0;
+    }
+    50% {
+        top: -27px;
+    }
+    100% {
+        top: -14px;
+    }
+}
+
+@keyframes shakeUp {
+    0% {
+        transform: rotateZ('0');
+        -webkit-transform: rotateZ('0');
+        -moz-transform: rotateZ('0');
+        -ms-transform: rotateZ('0');
+        -o-transform: rotateZ('0');
+}
+    25% {
+        transform: rotateZ('-10deg');
+        -webkit-transform: rotateZ('-10deg');
+        -moz-transform: rotateZ('-10deg');
+        -ms-transform: rotateZ('-10deg');
+        -o-transform: rotateZ('-10deg');
+}
+    50% {
+        transform: rotateZ('0');
+    }
+    75% {
+        transform: rotateZ('10deg');
+    }
+    100% {
+        transform: rotateZ('0');
+    }
+}
+
+@keyframes shakedown {
+    0% {
+        transform: rotateZ('0');
+        -webkit-transform: rotateZ('0');
+        -moz-transform: rotateZ('0');
+        -ms-transform: rotateZ('0');
+        -o-transform: rotateZ('0');
+}
+    80% {
+        transform: rotateZ('3deg');
+    }
+    90% {
+        transform: rotateZ('-3deg');
+    }
+    100% {
+        transform: rotateZ('0');
+    }
+}
 
